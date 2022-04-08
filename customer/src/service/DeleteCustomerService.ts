@@ -10,7 +10,7 @@ export default class DeleteCustomerService {
   public async execute(customerId: string): Promise<RequestResponse> {
     const user = await this.customerRepository.findById(customerId);
     if (!user) throw new NotFoundError('Database', 'Customer not registered');
-    await this.customerRepository.deleteById(customerId);
+    await this.customerRepository.deactivateById(customerId);
     return formatResponse(HttpStatusCodes.NO_CONTENT, 'Success', null);
   }
 }

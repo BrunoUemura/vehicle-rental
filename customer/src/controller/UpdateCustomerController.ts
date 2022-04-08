@@ -15,7 +15,7 @@ export default class UpdateCustomerController {
       const { id } = request.params;
       const body = request.body;
       const data = {
-        id: id,
+        customerId: id,
         ...body,
       };
 

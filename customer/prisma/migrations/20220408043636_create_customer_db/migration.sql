@@ -6,9 +6,9 @@ CREATE TABLE "Customer" (
     "password" TEXT NOT NULL,
     "documentNumber" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "deletedAt" DATETIME
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable

@@ -13,7 +13,7 @@ export class CustomerRepository {
 
   async findById(customerId: string): Promise<Customer> {
     return await this.customerRepository.findFirst({
-      where: { customerId: customerId },
+      where: { customerId: customerId, active: true },
       include: { address: {} },
     });
   }
@@ -42,10 +42,13 @@ export class CustomerRepository {
     });
   }
 
-  async deleteById(customerId: string): Promise<void> {
-    await this.customerRepository.delete({
+  async deactivateById(customerId: string): Promise<void> {
+    await this.customerRepository.update({
       where: {
         customerId: customerId,
+      },
+      data: {
+        active: false,
       },
     });
   }

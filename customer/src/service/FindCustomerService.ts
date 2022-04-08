@@ -9,7 +9,11 @@ export default class FindCustomerService {
 
   public async execute(customerId: string): Promise<RequestResponse> {
     const user = await this.customerRepository.findById(customerId);
-    if (!user) throw new NotFoundError('Database', 'Customer not registered');
+    if (!user)
+      throw new NotFoundError(
+        'Database',
+        'Customer not registered or deactivated',
+      );
     return formatResponse(HttpStatusCodes.OK, 'Success', user);
   }
 }
