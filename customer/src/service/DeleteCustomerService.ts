@@ -1,0 +1,16 @@
+import { CustomerRepository } from '@src/repository/CustomerRepository';
+import RequestResponse from '@src/interface/RequestResponse';
+import HttpStatusCodes from '@src/util/enum/HttpStatusCodes';
+import NotFoundError from '@src/util/error/NotFoundError';
+import { formatResponse } from '@src/util/format-response';
+
+export default class DeleteCustomerService {
+  private customerRepository = new CustomerRepository();
+
+  public async execute(customerId: string): Promise<RequestResponse> {
+    const user = await this.customerRepository.findById(customerId);
+    if (!user) throw new NotFoundError('Database', 'Customer not registered');
+    await this.customerRepository.deleteById(customerId);
+    return formatResponse(HttpStatusCodes.NO_CONTENT, 'Success', null);
+  }
+}
