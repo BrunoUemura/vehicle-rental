@@ -13,29 +13,33 @@ datasource db {
 }
 
 model Customer {
-  customerId        String    @id @default(uuid())
+  customerId        String    @id @default(uuid()) @map("customer_id")
   name              String
   email             String    @unique
   password          String
-  documentNumber    String    @unique
-  phoneNumber       String
+  documentNumber    String    @unique @map("document_number")
+  phoneNumber       String    @map("phone_number")
   active            Boolean   @default(true)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
   address           Address[]
+
+  @@map("customer")
 }
 
 model Address {
-  addressId         String    @id @default(uuid())
+  addressId         String    @id @default(uuid()) @map("address_id")
   customer          Customer  @relation(fields: [customerId], references: [customerId])
-  customerId        String    @unique
+  customerId        String    @unique @map("customer_id")
   street            String
   number            Int
   district          String
   city              String   
   state             String   
   country           String
-  zipCode           String
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  zipCode           String   @map("zip_code")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  
+  @@map("address")
 }

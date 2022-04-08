@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Customer {
+  customerId        String    @id @default(uuid()) @map("customer_id")
+  name              String
+  email             String    @unique
+  documentNumber    String    @unique @map("document_number")
+  phoneNumber       String    @map("phone_number")
+  active            Boolean   @default(true)
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  rentalOrder       RentalOrder[]
+
+  @@map("customer")
+}
+
+model Car {
+  carId             String    @id @default(uuid()) @map("car_id")
+  name              String
+  brand             String
+  year              Int
+  kilometers        Int
+  plate             String
+  available         Boolean   @default(true)
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  rentalOrder       RentalOrder[]
+
+  @@map("car")
+}
+
+model RentalOrder {
+  rentalId          String    @id @default(uuid()) @map("rental_id")
+  customer          Customer  @relation(fields: [customerId], references: [customerId])
+  customerId        String    @map("customer_id")
+  car               Car       @relation(fields: [carId], references: [carId])
+  carId             String    @map("car_id")
+  startDate         String    @map("start_date")
+  endDate           String    @map("end_date")
+  estimatedKM       Int       @map("estimated_km")
+  drivenKM          Int       @map("driven_km")
+  returnedDate      DateTime  @map("returned_date")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  @@map("rental_order")
+}
