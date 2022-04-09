@@ -1,13 +1,5 @@
-export interface CreateCustomer {
-  customerId: string;
-  name: string;
-  email: string;
-  documentNumber: string;
-  phoneNumber: string;
-  active: boolean;
-}
-
-export interface UpdateCustomer {
+export interface CustomerEvent {
+  event?: string;
   customerId: string;
   name: string;
   email: string;

@@ -40,7 +40,7 @@
   "policies": [],
   "queues": [
     {
-      "name": "user",
+      "name": "customer",
       "vhost": "admin-vhost",
       "durable": true,
       "auto_delete": false,

@@ -1,26 +1,13 @@
 version: "3"
 
 services:
-  rabbitmq:
-    build:
-      context: ./rabbitmq
-      dockerfile: ./Dockerfile
-    container_name: rental-rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - "./data/.rabbitmq_data:/var/lib/rabbitmq/mnesia"
-    networks:
-      - app-net
-
   customer_db:
     container_name: customer_db
     image: "postgres:alpine"
     ports:
       - "5432:5432"
     volumes:
-      - "./data/.customer_data:/var/lib/postgresql"
+      - "./data/customer_data:/var/lib/postgresql"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=docker
@@ -33,10 +20,23 @@ services:
     ports:
       - "15432:5432"
     volumes:
-      - "./data/.rental_data:/var/lib/postgresql"
+      - "./data/rental_data:/var/lib/postgresql"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=docker
+    networks:
+      - app-net
+
+  rabbitmq:
+    build:
+      context: ./rabbitmq
+      dockerfile: ./Dockerfile
+    container_name: rental_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "./data/rabbitmq_data:/var/lib/rabbitmq/mnesia"
     networks:
       - app-net
 

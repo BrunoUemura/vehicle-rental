@@ -1,5 +1,5 @@
 import { PrismaClient, Customer } from '@prisma/client';
-import { CreateCustomer, UpdateCustomer } from '@src/interface/CustomerEvents';
+import { CustomerEvent } from '@src/interface/CustomerEvents';
 
 export class CustomerRepository {
   private prisma = new PrismaClient();
@@ -17,7 +17,7 @@ export class CustomerRepository {
     });
   }
 
-  async create(data: CreateCustomer): Promise<Customer> {
+  async create(data: CustomerEvent): Promise<Customer> {
     return await this.customerRepository.create({
       data: {
         customerId: data.customerId,
@@ -29,7 +29,7 @@ export class CustomerRepository {
     });
   }
 
-  async update(data: UpdateCustomer): Promise<Customer> {
+  async update(data: CustomerEvent): Promise<Customer> {
     return await this.customerRepository.update({
       where: {
         customerId: data.customerId,

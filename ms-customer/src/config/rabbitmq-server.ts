@@ -12,10 +12,10 @@ export default class RabbitmqServer {
     try {
       this.conn = await connect(this.uri);
       this.channel = await this.conn.createChannel();
-      logger.info('RabbitMQ: OK');
+      logger.info('[RabbitMQ]: Successfully connected to Broker');
     } catch (error) {
-      logger.error('RabbitMQ: Error connecting to Broker');
-      throw new BrokerConnectionError();
+      logger.error('[RabbitMQ]: Error connecting to Broker');
+      throw new BrokerConnectionError('Error connecting to RabbitMQ');
     }
   }
 
