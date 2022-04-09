@@ -13,47 +13,61 @@ datasource db {
 }
 
 model Customer {
-  customerId        String    @id @default(uuid()) @map("customer_id")
-  name              String
-  email             String    @unique
-  documentNumber    String    @unique @map("document_number")
-  phoneNumber       String    @map("phone_number")
-  active            Boolean   @default(true)
-  createdAt         DateTime  @default(now()) @map("created_at")
-  updatedAt         DateTime  @updatedAt @map("updated_at")
+  customerId        String          @id
+  name              String      
+  email             String          @unique
+  documentNumber    String          @unique @map("document_number")
+  phoneNumber       String          @map("phone_number")
+  active            Boolean         @default(true)
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime        @updatedAt @map("updated_at")
   rentalOrder       RentalOrder[]
 
   @@map("customer")
 }
 
-model Car {
-  carId             String    @id @default(uuid()) @map("car_id")
-  name              String
-  brand             String
-  year              Int
-  kilometers        Int
-  plate             String
-  available         Boolean   @default(true)
-  createdAt         DateTime  @default(now()) @map("created_at")
-  updatedAt         DateTime  @updatedAt @map("updated_at")
+// enum VehicleType {
+//   CAR
+//   MOTORCYCLE
+// }
+
+model Vehicle {
+  vehicleId         String        @id
+  name              String    
+  model             String    
+  brand             String    
+  year              Int    
+  type              String    
+  kilometers        Int    
+  plate             String    
+  available         Boolean       @default(true)
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
   rentalOrder       RentalOrder[]
 
-  @@map("car")
+  @@map("vehicle")
 }
 
 model RentalOrder {
-  rentalId          String    @id @default(uuid()) @map("rental_id")
-  customer          Customer  @relation(fields: [customerId], references: [customerId])
-  customerId        String    @map("customer_id")
-  car               Car       @relation(fields: [carId], references: [carId])
-  carId             String    @map("car_id")
-  startDate         String    @map("start_date")
-  endDate           String    @map("end_date")
-  estimatedKM       Int       @map("estimated_km")
-  drivenKM          Int       @map("driven_km")
-  returnedDate      DateTime  @map("returned_date")
-  createdAt         DateTime  @default(now()) @map("created_at")
-  updatedAt         DateTime  @updatedAt @map("updated_at")
+  orderId             String         @id @default(uuid()) @map("order_id")
+       
+  customer            Customer       @relation(fields: [customerId], references: [customerId])
+  customerId          String         @map("customer_id")
+  vehicle             Vehicle        @relation(fields: [vehicleId], references: [vehicleId])
+  vehicleId           String         @map("vehicle_id")
+         
+  startDate           DateTime       @map("start_date")
+  endDate             DateTime       @map("end_date")
+  estimatedKM         Int            @map("estimated_km")
+  estimatedAmount     Decimal        @map("estimated_amount")
+  additionalAmount    Decimal        @default(0.00) @map("additional_amount")
+  totalAmount         Decimal        @map("total_amount")
+  drivenKM            Int?           @map("driven_km")
+  returnedDate        DateTime?      @map("returned_date")
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @updatedAt @map("updated_at")
+  canceledAt          DateTime?      @map("canceled_at")
 
   @@map("rental_order")
 }
+

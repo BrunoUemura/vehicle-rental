@@ -1,17 +1,30 @@
-export interface RequestCreateCustomer {
+export interface FindOrders {
   customerId?: string;
-  name: string;
-  email: string;
-  password: string;
-  documentNumber: string;
-  phoneNumber: string;
-  address: {
-    street: string;
-    number: number;
-    district: string;
-    city: string;
-    state: string;
-    country: string;
-    zipCode: string;
-  };
+  orderId?: string;
+}
+
+export interface CreateOrder {
+  customerDocumentNumber?: string;
+  customerId: string;
+  vehicleId: string;
+  startDate: Date;
+  endDate: Date;
+  estimatedKM: number;
+  estimatedAmount?: number;
+  additionalAmount?: number;
+  totalAmount?: number;
+}
+
+export interface UpdateOrder {
+  orderId: string;
+  customerId: string;
+  vehicleId: string;
+  startDate: Date;
+  endDate: Date;
+  estimatedKM: number;
+  estimatedAmount?: number;
+  additionalAmount?: number;
+  totalAmount?: number;
+  drivenKM?: number;
+  returnedDate?: Date;
 }

@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import NotFoundError from '@src/util/error/NotFoundError';
-import customer from '@src/routes/customer.routes';
+import order from '@src/routes/order.routes';
 
 const routes = Router();
 
-routes.use('/api/v1/', customer);
+routes.use('/api/v1/', order);
 routes.use((request: Request, _response: Response, next: NextFunction) => {
   if (!request.route) {
     return next(new NotFoundError('Request Endpoint', 'Route not found'));
