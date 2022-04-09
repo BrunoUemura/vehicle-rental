@@ -7,7 +7,7 @@ import HttpStatusCodes from '@src/util/enum/HttpStatusCodes';
 import { formatResponse } from '@src/util/format-response';
 import BadRequestError from '@src/util/error/BadRequestError';
 import { CreateOrder } from '@src/interface/Request';
-import calculateEstimatedKM from '@src/util/calculate-estimated-km';
+import { calculateEstimatedKM, calculateAmount } from '@src/util/funcitons';
 
 export default class CreateOrderService {
   private customerRepository = new CustomerRepository();
@@ -26,6 +26,8 @@ export default class CreateOrderService {
     }
 
     data.estimatedKM = calculateEstimatedKM(data.startDate, data.endDate);
+    data.estimatedAmount = calculateAmount(data.estimatedKM);
+    data.totalAmount = data.estimatedAmount;
 
     await this.vehicleRepository.updateStatus(data.vehicleId, false);
     const result = await this.rentalOrderRepository.create(data);

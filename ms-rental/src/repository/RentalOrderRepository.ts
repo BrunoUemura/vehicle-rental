@@ -58,6 +58,8 @@ export class RentalOrderRepository {
         orderId: data.orderId,
       },
       data: {
+        additionalAmount: data.additionalAmount,
+        totalAmount: data.totalAmount,
         drivenKM: data.drivenKM,
         returnedDate: new Date(data.returnedDate),
       },

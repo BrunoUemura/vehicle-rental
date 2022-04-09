@@ -2,15 +2,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
-
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:./dev.db"
+// }
 
 model Customer {
   customerId        String          @id
@@ -59,9 +59,9 @@ model RentalOrder {
   startDate           DateTime       @map("start_date")
   endDate             DateTime       @map("end_date")
   estimatedKM         Int            @map("estimated_km")
-  estimatedAmount     Decimal        @map("estimated_amount")
-  additionalAmount    Decimal        @default(0.00) @map("additional_amount")
-  totalAmount         Decimal        @map("total_amount")
+  estimatedAmount     Float          @map("estimated_amount")
+  additionalAmount    Float          @default(0.00) @map("additional_amount")
+  totalAmount         Float          @map("total_amount")
   drivenKM            Int?           @map("driven_km")
   returnedDate        DateTime?      @map("returned_date")
   createdAt           DateTime       @default(now()) @map("created_at")

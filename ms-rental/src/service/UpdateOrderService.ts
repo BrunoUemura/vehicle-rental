@@ -6,7 +6,7 @@ import NotFoundError from '@src/util/error/NotFoundError';
 import { formatResponse } from '@src/util/format-response';
 import { UpdateOrder } from '@src/interface/Request';
 import { RentalOrder } from '@prisma/client';
-import calculateEstimatedKM from '@src/util/calculate-estimated-km';
+import { calculateEstimatedKM, calculateAmount } from '@src/util/funcitons';
 
 export default class UpdateOrderService {
   private rentalOrderRepository = new RentalOrderRepository();
@@ -19,6 +19,13 @@ export default class UpdateOrderService {
     let orderUpdated: RentalOrder;
 
     if (data.drivenKM && data.returnedDate) {
+      data.additionalAmount =
+        data.drivenKM > order.estimatedKM
+          ? calculateAmount(data.drivenKM - order.estimatedKM)
+          : 0.0;
+
+      data.totalAmount = order.estimatedAmount + data.additionalAmount;
+
       orderUpdated = await this.rentalOrderRepository.updateReturn(data);
 
       order.vehicle.kilometers += data.drivenKM;
@@ -26,6 +33,9 @@ export default class UpdateOrderService {
       await this.vehicleRepository.updateStatus(data.vehicleId, true);
     } else {
       data.estimatedKM = calculateEstimatedKM(data.startDate, data.endDate);
+      data.estimatedAmount = calculateAmount(data.estimatedKM);
+      data.totalAmount = data.estimatedAmount;
+
       orderUpdated = await this.rentalOrderRepository.update(data);
     }
 

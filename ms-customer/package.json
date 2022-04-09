@@ -9,6 +9,9 @@
     "prettier-format": "prettier --config .prettierrc 'src/**/**/*.ts' --write",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
+    "postinstall": "prisma generate",
+    "migrate": "prisma migrate deploy",
+    "seed": "ts-node prisma/seed.ts",
     "docker": "sh ./scripts/build.sh",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
     "start": "node dist/src/server.js"
@@ -39,6 +42,7 @@
   },
   "dependencies": {
     "@prisma/client": "^3.9.2",
+    "amqplib": "^0.8.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",

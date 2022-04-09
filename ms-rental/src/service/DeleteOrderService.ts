@@ -16,6 +16,9 @@ export default class DeleteOrderService {
     if (order.returnedDate !== null) {
       throw new BadRequestError('Order Cancelation', 'Order already returned');
     }
+    if (order.canceledAt !== null) {
+      throw new BadRequestError('Order Cancelation', 'Order already canceled');
+    }
 
     await this.rentalOrderRepository.deleteById(orderId);
     await this.vehicleRepository.updateStatus(order.vehicleId, true);

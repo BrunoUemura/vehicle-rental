@@ -1,3 +1,6 @@
+# Infra
+data/
+
 # Logs
 logs
 *.log
