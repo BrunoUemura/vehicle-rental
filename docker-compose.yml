@@ -1,32 +1,6 @@
 version: "3"
 
 services:
-  customer_db:
-    container_name: customer_db
-    image: "postgres:alpine"
-    ports:
-      - "5432:5432"
-    volumes:
-      - "./data/customer_data:/var/lib/postgresql"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=docker
-    networks:
-      - app-net
-
-  rental_db:
-    container_name: rental_db
-    image: "postgres:alpine"
-    ports:
-      - "15432:5432"
-    volumes:
-      - "./data/rental_data:/var/lib/postgresql"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=docker
-    networks:
-      - app-net
-
   rabbitmq:
     build:
       context: ./rabbitmq
@@ -39,6 +13,45 @@ services:
       - "./data/rabbitmq_data:/var/lib/rabbitmq/mnesia"
     networks:
       - app-net
+
+  rental_db:
+    container_name: rental_db
+    image: "postgres:alpine"
+    ports:
+      - "15432:5432"
+    volumes:
+      - "./data/rental_db:/var/lib/postgresql"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+    networks:
+      - app-net
+
+  customer-db:
+    container_name: customer-db
+    image: "postgres:alpine"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./data/customer_db:/var/lib/postgresql"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=customer_db
+    networks:
+      - app-net
+
+  customer-service:
+    container_name: customer-service
+    build:
+      context: ./ms-customer
+      dockerfile: ./Dockerfile
+    depends_on:
+      - customer-db
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 5001:5001
 
 networks:
   app-net:

@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  customer-db:
+    container_name: customer-db
+    image: 'postgres:alpine'
+    ports:
+      - '5432:5432'
+    volumes:
+      - './data/pg_data:/var/lib/postgresql'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=customer_db
+    networks:
+      - app-net
+
+  customer-service:
+    container_name: customer-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 5001:5001
+
+networks:
+  app-net:
+    driver: bridge
