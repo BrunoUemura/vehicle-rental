@@ -12,7 +12,8 @@ export default class UpdateCustomerService {
 
   public async execute(data: RequestCreateCustomer): Promise<RequestResponse> {
     const user = await this.customerRepository.findById(data.customerId);
-    if (!user) throw new NotFoundError('Database', 'Customer not registered');
+    if (!user)
+      throw new NotFoundError('Customer Update', 'Customer not registered');
 
     const userUpdated = await this.customerRepository.update(data);
     if (data.address) await this.addressRepository.update(data);

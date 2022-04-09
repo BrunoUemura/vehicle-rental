@@ -15,7 +15,10 @@ export default class CreateExpenseService {
       data.documentNumber,
     );
     if (user) {
-      throw new BadRequestError('Database', 'Customer already registered');
+      throw new BadRequestError(
+        'Customer Registraion',
+        'Customer already registered',
+      );
     }
 
     const customer = await this.customerRepository.create(data);

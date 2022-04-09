@@ -11,7 +11,7 @@ export default class FindCustomerService {
     const user = await this.customerRepository.findById(customerId);
     if (!user)
       throw new NotFoundError(
-        'Database',
+        'Customer Retrieve',
         'Customer not registered or deactivated',
       );
     return formatResponse(HttpStatusCodes.OK, 'Success', user);
