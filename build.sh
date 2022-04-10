@@ -16,4 +16,7 @@ while [ $SECONDS -lt $end ]; do
 done
 
 docker exec customer-service npx prisma migrate deploy
+docker exec rental-service npx prisma migrate deploy
+
 docker exec customer-service npx prisma generate
+docker exec rental-service npx prisma generate

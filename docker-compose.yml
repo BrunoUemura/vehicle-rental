@@ -14,19 +14,6 @@ services:
     networks:
       - app-net
 
-  rental_db:
-    container_name: rental_db
-    image: "postgres:alpine"
-    ports:
-      - "15432:5432"
-    volumes:
-      - "./data/rental_db:/var/lib/postgresql"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=docker
-    networks:
-      - app-net
-
   customer-db:
     container_name: customer-db
     image: "postgres:alpine"
@@ -47,11 +34,39 @@ services:
       context: ./ms-customer
       dockerfile: ./Dockerfile
     depends_on:
+      - rabbitmq
       - customer-db
     volumes:
       - ./:/usr/src/app
     ports:
       - 5001:5001
+
+  rental-db:
+    container_name: rental-db
+    image: "postgres:alpine"
+    ports:
+      - "15432:5432"
+    volumes:
+      - "./data/rental_db:/var/lib/postgresql"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=rental_db
+    networks:
+      - app-net
+
+  rental-service:
+    container_name: rental-service
+    build:
+      context: ./ms-rental
+      dockerfile: ./Dockerfile
+    depends_on:
+      - rabbitmq
+      - rental-db
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 5002:5002
 
 networks:
   app-net:

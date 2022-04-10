@@ -1,6 +1,6 @@
 import logger from '@src/config/logger';
 import RabbitmqServer from '@src/config/rabbitmq-server';
-import { RabbitMQService } from '@src/service/RabbitmqService';
+import { RabbitMQService } from '@src/service/RabbitMQService';
 
 export async function rabbitmqConsumer() {
   const broker = new RabbitmqServer(process.env.RABBITMQ_URL);

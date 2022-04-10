@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  rental-db:
+    container_name: rental-db
+    image: 'postgres:alpine'
+    ports:
+      - '15432:5432'
+    volumes:
+      - './data:/var/lib/postgresql'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+    networks:
+      - app-net
+
+  rental-service:
+    container_name: rental-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 5002:5002
+
+networks:
+  app-net:
+    driver: bridge

@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vehicle {
+  vehicleId         String        @id @default(uuid()) @map("vehicle_id")
+  name              String    
+  model             String    
+  brand             String    
+  year              Int    
+  type              String    
+  kilometers        Int    
+  plate             String        @unique
+  available         Boolean       @default(true)
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  @@map("vehicle")
+}
+

@@ -13,7 +13,7 @@ datasource db {
 // }
 
 model Customer {
-  customerId        String          @id
+  customerId        String          @id @map("customer_id")
   name              String      
   email             String          @unique
   documentNumber    String          @unique @map("document_number")
@@ -39,7 +39,7 @@ model Vehicle {
   year              Int    
   type              String    
   kilometers        Int    
-  plate             String    
+  plate             String        @unique
   available         Boolean       @default(true)
   createdAt         DateTime      @default(now()) @map("created_at")
   updatedAt         DateTime      @updatedAt @map("updated_at")
