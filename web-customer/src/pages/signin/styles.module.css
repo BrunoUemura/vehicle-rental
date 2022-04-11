@@ -1,0 +1,25 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #f4f4f4;
+}
+
+.form {
+  height: max-content;
+  padding: 5rem;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #fff;
+}
+
+.form h1 {
+  text-align: center;
+}

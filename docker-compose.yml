@@ -95,6 +95,19 @@ services:
     ports:
       - 5003:5003
 
+  bff-service:
+    container_name: bff-service
+    build:
+      context: ./ms-bff
+      dockerfile: ./Dockerfile
+    depends_on:
+      - customer-service
+      - rental-service
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 5000:5000
+
 networks:
   app-net:
     driver: bridge

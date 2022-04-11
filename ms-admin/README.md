@@ -6,19 +6,19 @@ Admin Service
 
 ### Vehicle
 
-- Create new vehicle
-- Update vehicle
-- Retrieve vehicle information
-- Delete vehicle
+- [x] Create new vehicle
+- [x] Update vehicle
+- [x] Retrieve vehicle information
+- [x] Delete vehicle
 
 ### Customer
 
-- Update customer
-- Retrieve customer information
-- Delete customer
+- [] Update customer
+- [] Retrieve customer information
+- [] Delete customer
 
 ### Rental Order
 
-- Update order
-- Retrieve order information
-- Delete order
+- [] Update order
+- [] Retrieve order information
+- [] Delete order

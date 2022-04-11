@@ -1,10 +1,10 @@
-# Vehicle Rental Service
+# Vehicle Rental Order Service
 
-Vehicle Rental Service
+Vehicle Rental Order Service
 
 ## Usecase
 
-- Create new rental order
-- Update rental order
-- Retrieve rental order information
-- Cancel rental order
+- [x] Create new rental order
+- [x] Update rental order
+- [x] Retrieve rental order information
+- [x] Cancel rental order
