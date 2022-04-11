@@ -1,6 +1,6 @@
-import { Customer } from '@prisma/client';
+import { Vehicle } from '@prisma/client';
 
 export default interface RequestResponse {
   status: number;
-  body: Customer[];
+  body: Vehicle[];
 }

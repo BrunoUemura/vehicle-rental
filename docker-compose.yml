@@ -82,18 +82,18 @@ services:
     networks:
       - app-net
 
-  # admin-service:
-  #   container_name: admin-service
-  #   build:
-  #     context: ./ms-admin
-  #     dockerfile: ./Dockerfile
-  #   depends_on:
-  #     - rabbitmq
-  #     - admin-db
-  #   volumes:
-  #     - ./:/usr/src/app
-  #   ports:
-  #     - 5003:5003
+  admin-service:
+    container_name: admin-service
+    build:
+      context: ./ms-admin
+      dockerfile: ./Dockerfile
+    depends_on:
+      - rabbitmq
+      - admin-db
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 5003:5003
 
 networks:
   app-net:

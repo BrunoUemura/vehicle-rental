@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
-// rabbitmqConsumer();
+rabbitmqConsumer();
 app.use(routes);
 app.use(errorHandler);
 
