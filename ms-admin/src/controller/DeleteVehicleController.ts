@@ -1,10 +1,9 @@
 import { Response, NextFunction, Request } from 'express';
 
+import DeleteVehicleService from '@src/service/DeleteVehicleService';
 import { RequestValidation } from '@src/validation/RequestValidation';
-import CreateOrderService from '@src/service/CreateOrderService';
-import HttpStatusCodes from '@src/util/enum/HttpStatusCodes';
 
-export default class CreateOrderController {
+export default class DeleteVehicleController {
   public async handle(
     request: Request,
     response: Response,
@@ -12,12 +11,12 @@ export default class CreateOrderController {
   ): Promise<Response | NextFunction> {
     try {
       await RequestValidation.validateRequest(request);
-      const data = request.body;
 
-      const service = new CreateOrderService();
-      const result = await service.execute(data);
+      const { id } = request.params;
 
-      return response.status(HttpStatusCodes.CREATED).json(result);
+      const service = new DeleteVehicleService();
+      const result = await service.execute(id);
+      return response.json(result);
     } catch (err) {
       next(err);
     }

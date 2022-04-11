@@ -1,9 +1,13 @@
 import { PrismaClient, Vehicle } from '@prisma/client';
-import { RequestCreateVehicle } from '@src/interface/Request';
+import { VehicleInterface } from '@src/interface/Request';
 
 export class VehicleRepository {
   private prisma = new PrismaClient();
   private vehicleRepository = this.prisma.vehicle;
+
+  async findAll(): Promise<Vehicle[]> {
+    return await this.vehicleRepository.findMany();
+  }
 
   async findByPlate(plate: string): Promise<Vehicle> {
     return await this.vehicleRepository.findFirst({
@@ -13,42 +17,55 @@ export class VehicleRepository {
 
   async findById(vehicleId: string): Promise<Vehicle> {
     return await this.vehicleRepository.findFirst({
-      where: { vehicleId: vehicleId, active: true },
-      include: { address: {} },
+      where: { vehicleId: vehicleId },
     });
   }
 
-  async create(data: RequestCreateVehicle): Promise<Vehicle> {
+  async create(data: VehicleInterface): Promise<Vehicle> {
     return await this.vehicleRepository.create({
       data: {
-        name: data.name.toLowerCase(),
-        email: data.email.toLowerCase(),
-        password: data.password,
-        documentNumber: data.documentNumber,
-        phoneNumber: data.phoneNumber,
+        name: data.name,
+        model: data.model,
+        brand: data.brand,
+        year: data.year,
+        type: data.type,
+        kilometers: data.kilometers,
+        plate: data.plate,
       },
     });
   }
 
-  async update(data: RequestCreateCustomer): Promise<Vehicle> {
+  async update(data: VehicleInterface): Promise<Vehicle> {
     return await this.vehicleRepository.update({
       where: {
         vehicleId: data.vehicleId,
       },
       data: {
-        name: data.name.toLowerCase(),
-        phoneNumber: data.phoneNumber,
+        name: data.name,
+        model: data.model,
+        brand: data.brand,
+        year: data.year,
+        type: data.type,
+        kilometers: data.kilometers,
       },
     });
   }
 
-  async deactivateById(vehicleId: string): Promise<void> {
-    await this.vehicleRepository.update({
+  async updateStatus(vehicleId: string, status: boolean): Promise<Vehicle> {
+    return await this.vehicleRepository.update({
       where: {
         vehicleId: vehicleId,
       },
       data: {
-        active: false,
+        available: status,
+      },
+    });
+  }
+
+  async deleteById(vehicleId: string): Promise<void> {
+    await this.vehicleRepository.delete({
+      where: {
+        vehicleId: vehicleId,
       },
     });
   }

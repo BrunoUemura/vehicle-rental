@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  rental-db:
-    container_name: rental-db
+  admin-db:
+    container_name: admin-db
     image: 'postgres:alpine'
     ports:
-      - '15432:5432'
+      - '25432:5432'
     volumes:
       - './data:/var/lib/postgresql'
     environment:
@@ -14,15 +14,15 @@ services:
     networks:
       - app-net
 
-  rental-service:
-    container_name: rental-service
+  admin-service:
+    container_name: admin-service
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - ./:/usr/src/app
     ports:
-      - 5002:5002
+      - 5003:5003
 
 networks:
   app-net:

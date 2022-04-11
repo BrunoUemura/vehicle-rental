@@ -1,5 +1,5 @@
 import { PrismaClient, Vehicle } from '@prisma/client';
-import { CreateVehicle, UpdateVehicle } from '@src/interface/VehicleEvents';
+import { VehicleInterface } from '@src/interface/VehicleEvents';
 
 export class VehicleRepository {
   private prisma = new PrismaClient();
@@ -21,7 +21,7 @@ export class VehicleRepository {
     });
   }
 
-  async create(data: CreateVehicle): Promise<Vehicle> {
+  async create(data: VehicleInterface): Promise<Vehicle> {
     return await this.vehicleRepository.create({
       data: {
         vehicleId: data.vehicleId,
@@ -36,7 +36,7 @@ export class VehicleRepository {
     });
   }
 
-  async update(data: UpdateVehicle): Promise<Vehicle> {
+  async update(data: VehicleInterface): Promise<Vehicle> {
     return await this.vehicleRepository.update({
       where: {
         vehicleId: data.vehicleId,
@@ -48,7 +48,6 @@ export class VehicleRepository {
         year: data.year,
         type: data.type,
         kilometers: data.kilometers,
-        plate: data.plate,
         available: data.available,
       },
     });

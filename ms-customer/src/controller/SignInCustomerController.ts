@@ -2,6 +2,7 @@ import { Response, NextFunction, Request } from 'express';
 
 import { RequestValidation } from '@src/validation/RequestValidation';
 import SignInCustomerService from '@src/service/SignInCustomerService';
+import HttpStatusCodes from '@src/util/enum/HttpStatusCodes';
 
 export default class SignInCustomerController {
   public async handle(
@@ -16,7 +17,7 @@ export default class SignInCustomerController {
 
       const service = new SignInCustomerService();
       const result = await service.execute(data);
-      return response.status(201).json(result);
+      return response.status(HttpStatusCodes.CREATED).json(result);
     } catch (err) {
       next(err);
     }

@@ -1,4 +1,11 @@
-export interface RequestCreateVehicle {
+export interface VehicleFind {
+  vehicleId?: string;
+  plate?: string;
+}
+
+export interface VehicleInterface {
+  event?: string;
+  vehicleId?: string;
   name: string;
   model: string;
   brand: string;
@@ -6,4 +13,5 @@ export interface RequestCreateVehicle {
   type: string;
   kilometers: number;
   plate: string;
+  available?: boolean;
 }

@@ -1,10 +1,9 @@
 import { Response, NextFunction, Request } from 'express';
 
+import FindVehicleService from '@src/service/FindVehicleService';
 import { RequestValidation } from '@src/validation/RequestValidation';
-import CreateCustomerService from '@src/service/CreateCustomerService';
-import HttpStatusCodes from '@src/util/enum/HttpStatusCodes';
 
-export default class CreateCustomerController {
+export default class FindVehicleController {
   public async handle(
     request: Request,
     response: Response,
@@ -13,11 +12,11 @@ export default class CreateCustomerController {
     try {
       await RequestValidation.validateRequest(request);
 
-      const data = request.body;
+      const data = request.query;
 
-      const service = new CreateCustomerService();
+      const service = new FindVehicleService();
       const result = await service.execute(data);
-      return response.status(HttpStatusCodes.CREATED).json(result);
+      return response.json(result);
     } catch (err) {
       next(err);
     }

@@ -68,6 +68,33 @@ services:
     ports:
       - 5002:5002
 
+  admin-db:
+    container_name: admin-db
+    image: "postgres:alpine"
+    ports:
+      - "25432:5432"
+    volumes:
+      - "./data/admin_db:/var/lib/postgresql"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=admin_db
+    networks:
+      - app-net
+
+  # admin-service:
+  #   container_name: admin-service
+  #   build:
+  #     context: ./ms-admin
+  #     dockerfile: ./Dockerfile
+  #   depends_on:
+  #     - rabbitmq
+  #     - admin-db
+  #   volumes:
+  #     - ./:/usr/src/app
+  #   ports:
+  #     - 5003:5003
+
 networks:
   app-net:
     driver: bridge

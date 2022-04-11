@@ -48,6 +48,16 @@
         "x-queue-mode": "lazy",
         "x-queue-type": "classic"
       }
+    },
+    {
+      "name": "vehicle",
+      "vhost": "admin-vhost",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-mode": "lazy",
+        "x-queue-type": "classic"
+      }
     }
   ],
   "exchanges": [],
