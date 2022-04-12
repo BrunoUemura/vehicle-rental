@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "customer" (
-    "customerId" TEXT NOT NULL,
+    "customer_id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "document_number" TEXT NOT NULL,
@@ -9,12 +9,12 @@ CREATE TABLE "customer" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "customer_pkey" PRIMARY KEY ("customerId")
+    CONSTRAINT "customer_pkey" PRIMARY KEY ("customer_id")
 );
 
 -- CreateTable
 CREATE TABLE "vehicle" (
-    "vehicleId" TEXT NOT NULL,
+    "vehicle_id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "model" TEXT NOT NULL,
     "brand" TEXT NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE "vehicle" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "vehicle_pkey" PRIMARY KEY ("vehicleId")
+    CONSTRAINT "vehicle_pkey" PRIMARY KEY ("vehicle_id")
 );
 
 -- CreateTable
@@ -55,8 +55,11 @@ CREATE UNIQUE INDEX "customer_email_key" ON "customer"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "customer_document_number_key" ON "customer"("document_number");
 
--- AddForeignKey
-ALTER TABLE "rental_order" ADD CONSTRAINT "rental_order_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "vehicle_plate_key" ON "vehicle"("plate");
 
 -- AddForeignKey
-ALTER TABLE "rental_order" ADD CONSTRAINT "rental_order_vehicle_id_fkey" FOREIGN KEY ("vehicle_id") REFERENCES "vehicle"("vehicleId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "rental_order" ADD CONSTRAINT "rental_order_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "customer"("customer_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "rental_order" ADD CONSTRAINT "rental_order_vehicle_id_fkey" FOREIGN KEY ("vehicle_id") REFERENCES "vehicle"("vehicle_id") ON DELETE RESTRICT ON UPDATE CASCADE;

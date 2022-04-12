@@ -1,8 +1,16 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Router from "next/router";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+
+  useEffect(() => {
+    isAuthenticated === true ? Router.push("/order") : Router.push("/signin");
+  }, [isAuthenticated]);
+
   return (
     <div className={styles.container}>
       <Head>

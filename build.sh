@@ -8,7 +8,7 @@ docker-compose up -d
 
 echo -e "${green}[========================= Executing  Migrations =========================]${reset}"
 chars="."
-end=$((SECONDS+40))
+end=$((SECONDS+60))
 
 while [ $SECONDS -lt $end ]; do
     sleep 0.5
@@ -17,6 +17,8 @@ done
 
 docker exec customer-service npx prisma migrate deploy
 docker exec rental-service npx prisma migrate deploy
+docker exec admin-service npx prisma migrate deploy
 
 docker exec customer-service npx prisma generate
 docker exec rental-service npx prisma generate
+docker exec admin-service npx prisma generate

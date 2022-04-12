@@ -32,7 +32,7 @@ model Customer {
 // }
 
 model Vehicle {
-  vehicleId         String        @id
+  vehicleId         String        @id @map("vehicle_id")
   name              String    
   model             String    
   brand             String    
