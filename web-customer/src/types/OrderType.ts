@@ -17,7 +17,7 @@ export type Order = {
   additionalAmount: number;
   totalAmount: number;
   drivenKM: number | null;
-  returnedDate: Date | null;
+  returnedDate: string | null;
   createdAt: string;
   updatedAt: string;
   canceledAt: Date | null;

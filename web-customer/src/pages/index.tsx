@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
 
   useEffect(() => {
-    isAuthenticated === true ? Router.push("/order") : Router.push("/signin");
+    isAuthenticated === true ? Router.push("/orders") : Router.push("/signin");
   }, [isAuthenticated]);
 
   return (

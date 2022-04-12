@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container table {
+  text-align: center;
+}
+
+.container table thead {
+  color: #fff;
+  background-color: #00053c;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions span {
+  cursor: pointer;
+}
+
+.actions span:hover {
+  text-decoration: underline;
+}
+
+.editAction {
+  color: #05a105;
+}
+
+.returnAction {
+  color: #0707b0;
+}
+
+.cancelAction {
+  color: #bb0303;
+}
