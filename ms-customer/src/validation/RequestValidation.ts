@@ -7,7 +7,7 @@ import { RequestCreateCustomer } from '@src/interface/Request';
 export class RequestValidation {
   public static async validateRequest(request: Request) {
     if (request.method === 'GET' && request.path === '/customer') {
-      await AuthValidation.validate(request);
+      // await AuthValidation.validate(request);
       await this.validateFindRequest(request);
     }
 
@@ -16,12 +16,12 @@ export class RequestValidation {
     }
 
     if (request.method === 'PUT' && request.path === '/customer') {
-      await AuthValidation.validate(request);
+      // await AuthValidation.validate(request);
       await this.validateUpdateRequest(request);
     }
 
     if (request.method === 'DELETE' && request.path === '/customer') {
-      await AuthValidation.validate(request);
+      // await AuthValidation.validate(request);
       await this.validateDeleteRequest(request);
     }
 

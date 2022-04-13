@@ -1,16 +1,28 @@
 import Link from "next/link";
+import { parseCookies } from "nookies";
 import styles from "./styles.module.css";
-import AuthRequest from "../../service/AuthRequest";
+import OrdersRequest from "../../service/OrdersRequest";
 import { OrderType } from "../../types/OrderType";
 import OrderList from "../../components/OrderList";
+import { GetServerSidePropsContext } from "next";
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({
+  req,
+  res,
+  params,
+}: GetServerSidePropsContext) => {
+  const { customer_token: token } = parseCookies();
+  console.log(token);
+
   const customerId = "c7c94817-27f1-416a-863d-0258235a1c4e";
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3Yzk0ODE3LTI3ZjEtNDE2YS04NjNkLTAyNTgyMzVhMWM0ZSIsImlhdCI6MTY0OTc4MzI3NywiZXhwIjoxNjQ5Nzg2ODc3fQ.n7ZX7nPaHoM4TPU_WEH5mQTArhaz3i0KARnfMVF910o";
   const request = { token, params: { customerId } };
-  const data = await AuthRequest.getAllCustomerOrders(request);
-  console.log(data.status);
+  const data = await OrdersRequest.getAllCustomerOrders(request);
+
+  if (data.status === 401) {
+    res.statusCode = 302;
+    res.setHeader("Location", `/signin`);
+    return { props: {} };
+  }
 
   return {
     props: { ...data },

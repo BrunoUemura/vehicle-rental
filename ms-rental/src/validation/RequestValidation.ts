@@ -6,7 +6,7 @@ import { CreateOrder, UpdateOrder } from '@src/interface/Request';
 
 export class RequestValidation {
   public static async validateRequest(request: Request) {
-    await AuthValidation.validate(request);
+    // await AuthValidation.validate(request);
 
     if (request.method === 'GET' && request.path === '/order') {
       await this.validateRequestQueryParams(request);

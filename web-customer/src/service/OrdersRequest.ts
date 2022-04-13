@@ -1,6 +1,6 @@
 import { GetRequestFindOrder, PostRequestOrder } from "../types/RequestType";
 
-export default class AuthRequest {
+export default class OrdersRequest {
   static async getAllCustomerOrders(request: GetRequestFindOrder) {
     try {
       console.log(process.env.BACKEND_API);

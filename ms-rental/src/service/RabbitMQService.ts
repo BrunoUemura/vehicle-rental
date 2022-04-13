@@ -31,21 +31,46 @@ export class RabbitMQService {
     logger.info(`[RabbitMQ]: Event Vehicle ${message.event}`);
 
     switch (message.event) {
-      case 'create':
+      case 'create': {
         await vehicleRepository.create(message);
         break;
-      case 'update':
+      }
+      case 'update': {
+        const vehicleExists = await vehicleRepository.findById(
+          message.vehicleId,
+        );
+        if (!vehicleExists) {
+          console.log('Vehicle not registered');
+          break;
+        }
         await vehicleRepository.update(message);
         break;
-      case 'delete':
+      }
+      case 'delete': {
+        const vehicleExists = await vehicleRepository.findById(
+          message.vehicleId,
+        );
+        if (!vehicleExists) {
+          console.log('Vehicle not registered');
+          break;
+        }
         await vehicleRepository.deleteById(message.vehicleId);
         break;
-      case 'updateStatus':
+      }
+      case 'updateStatus': {
+        const vehicleExists = await vehicleRepository.findById(
+          message.vehicleId,
+        );
+        if (!vehicleExists) {
+          console.log('Vehicle not registered');
+          break;
+        }
         await vehicleRepository.updateStatus(
           message.vehicleId,
           message.available,
         );
         break;
+      }
       default:
         break;
     }

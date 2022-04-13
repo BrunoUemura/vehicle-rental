@@ -1,15 +1,27 @@
+import axios from "axios";
+import jwt from "jsonwebtoken";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import { parseCookies } from "nookies";
+import { useContext, useEffect, useState } from "react";
+// import { AuthContext } from "../context/AuthContext";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  // const { isAuthenticated, customer, setCustomer } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     Router.push("/orders");
+  //   } else {
+  //     Router.push("/signin");
+  //   }
+  // }, []);
 
   useEffect(() => {
-    isAuthenticated === true ? Router.push("/orders") : Router.push("/signin");
-  }, [isAuthenticated]);
+    Router.push("/orders");
+  }, []);
 
   return (
     <div className={styles.container}>
