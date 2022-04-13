@@ -9,7 +9,7 @@ export async function rabbitmqConsumer() {
 
   await broker.start();
 
-  queues.forEach(async (queue: string) => {
+  await queues.forEach(async (queue: string) => {
     await broker.consume(queue, async message => {
       logger.info(`[RabbitMQ]: Successfully consumed message`);
       const object = JSON.parse(message.content.toString());

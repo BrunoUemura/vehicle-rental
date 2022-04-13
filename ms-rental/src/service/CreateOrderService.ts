@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { CustomerRepository } from '@src/repository/CustomerRepository';
 import { VehicleRepository } from '@src/repository/VehicleRepository';
 import { RentalOrderRepository } from '@src/repository/RentalOrderRepository';
@@ -8,11 +7,13 @@ import { formatResponse } from '@src/util/format-response';
 import BadRequestError from '@src/util/error/BadRequestError';
 import { CreateOrder } from '@src/interface/Request';
 import { calculateEstimatedKM, calculateAmount } from '@src/util/funcitons';
+import { RabbitMQProducer } from '@src/util/rabbitmq-producer';
 
 export default class CreateOrderService {
   private customerRepository = new CustomerRepository();
   private vehicleRepository = new VehicleRepository();
   private rentalOrderRepository = new RentalOrderRepository();
+  private rabbitMQProducer = new RabbitMQProducer();
 
   public async execute(data: CreateOrder): Promise<RequestResponse> {
     const user = await this.customerRepository.findById(data.customerId);

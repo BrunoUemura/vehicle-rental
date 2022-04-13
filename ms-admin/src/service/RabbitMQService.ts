@@ -9,9 +9,6 @@ export class RabbitMQService {
     logger.info(`[RabbitMQ]: Event ${message.event}`);
 
     switch (message.event) {
-      case 'create':
-        await vehicleRepository.create(message);
-        break;
       case 'update':
         await vehicleRepository.update(message);
         break;

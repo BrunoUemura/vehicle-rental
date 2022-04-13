@@ -1,6 +1,7 @@
 import { Connection, Channel, connect, Message } from 'amqplib';
 import logger from '@src/config/logger';
 import BrokerConnectionError from '@src/util/error/BrokerConnectionError';
+import { delay } from '@src/util/functions';
 
 export default class RabbitmqServer {
   private conn: Connection;
@@ -9,13 +10,26 @@ export default class RabbitmqServer {
   constructor(private uri: string) {}
 
   async start(): Promise<void> {
-    try {
-      this.conn = await connect(this.uri);
-      this.channel = await this.conn.createChannel();
-      logger.info('[RabbitMQ]: Successfully connected to Broker');
-    } catch (error) {
-      logger.error('[RabbitMQ]: Error connecting to Broker');
-      throw new BrokerConnectionError('Error connecting to RabbitMQ');
+    let retries = 1;
+    const maxTries = Number(process.env.CONNECTION_RETRIES);
+
+    while (retries <= maxTries) {
+      try {
+        this.conn = await connect(this.uri);
+        this.channel = await this.conn.createChannel();
+        logger.info('[RabbitMQ]: Successfully connected to Broker');
+        break;
+      } catch (error) {
+        logger.error('[RabbitMQ]: Error connecting to Broker');
+        logger.info(`[RabbitMQ]: Connection attempt: ${retries}`);
+
+        if (retries === maxTries) {
+          throw new BrokerConnectionError('Error connecting to RabbitMQ');
+        } else {
+          retries++;
+          await delay(Number(process.env.CONNECTION_RETRIES_DELAY));
+        }
+      }
     }
   }
 
