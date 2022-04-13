@@ -3,7 +3,7 @@ version: "3"
 services:
   rabbitmq:
     build:
-      context: ./rabbitmq
+      context: ./backend/rabbitmq
       dockerfile: ./Dockerfile
     container_name: rental_rabbitmq
     ports:
@@ -31,7 +31,7 @@ services:
   customer-service:
     container_name: customer-service
     build:
-      context: ./ms-customer
+      context: ./backend/ms-customer
       dockerfile: ./Dockerfile
     depends_on:
       - rabbitmq
@@ -58,7 +58,7 @@ services:
   rental-service:
     container_name: rental-service
     build:
-      context: ./ms-rental
+      context: ./backend/ms-rental
       dockerfile: ./Dockerfile
     depends_on:
       - rabbitmq
@@ -85,7 +85,7 @@ services:
   admin-service:
     container_name: admin-service
     build:
-      context: ./ms-admin
+      context: ./backend/ms-admin
       dockerfile: ./Dockerfile
     depends_on:
       - rabbitmq
@@ -98,7 +98,7 @@ services:
   bff-service:
     container_name: bff-service
     build:
-      context: ./ms-bff
+      context: ./backend/ms-bff
       dockerfile: ./Dockerfile
     depends_on:
       - customer-service
